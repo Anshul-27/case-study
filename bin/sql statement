@@ -1,0 +1,84 @@
+mysql> create database cst;
+Query OK, 1 row affected (0.11 sec)
+
+mysql> use cst
+Database changed
+mysql> show tables;
+Empty set (0.01 sec)
+
+mysql> create table users(id int primary key,name varchar(100),email varchar(100),phone varchar(50),password varchar(50),role varchar(50));
+Query OK, 0 rows affected (0.65 sec)
+
+mysql> desc users;
++----------+--------------+------+-----+---------+-------+
+| Field    | Type         | Null | Key | Default | Extra |
++----------+--------------+------+-----+---------+-------+
+| id       | int(11)      | NO   | PRI | NULL    |       |
+| name     | varchar(100) | YES  |     | NULL    |       |
+| email    | varchar(100) | YES  |     | NULL    |       |
+| phone    | varchar(50)  | YES  |     | NULL    |       |
+| password | varchar(50)  | YES  |     | NULL    |       |
+| role     | varchar(50)  | YES  |     | NULL    |       |
++----------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table books(id primary key,name varchar(100),author varchar(100),subject varchar(100),price float,isbn varchar(50));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key,name varchar(100),author varchar(100),subject varchar(100),price flo' at line 1
+mysql> create table books(id int primary key,name varchar(100),author varchar(100),subject varchar(100),price float,isbn varchar(50));
+Query OK, 0 rows affected (0.67 sec)
+
+mysql> clear
+mysql> ;
+ERROR: 
+No query specified
+
+mysql> 
+mysql> create table copies(id int primary key,bookid int,rack int,status varchar(20),foreign key(bookid) references books(id));
+Query OK, 0 rows affected (1.37 sec)
+
+mysql> desc copies;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int(11)     | NO   | PRI | NULL    |       |
+| bookid | int(11)     | YES  | MUL | NULL    |       |
+| rack   | int(11)     | YES  |     | NULL    |       |
+| status | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table payments(id int primary key,userid int,amount float,type varchar(30),transaction_time varchar(30),nextpayment_duedate varchar(40),foreign key(userid) references users(id));
+Query OK, 0 rows affected (1.02 sec)
+
+mysql> desc payments;
++---------------------+-------------+------+-----+---------+-------+
+| Field               | Type        | Null | Key | Default | Extra |
++---------------------+-------------+------+-----+---------+-------+
+| id                  | int(11)     | NO   | PRI | NULL    |       |
+| userid              | int(11)     | YES  | MUL | NULL    |       |
+| amount              | float       | YES  |     | NULL    |       |
+| type                | varchar(30) | YES  |     | NULL    |       |
+| transaction_time    | varchar(30) | YES  |     | NULL    |       |
+| nextpayment_duedate | varchar(40) | YES  |     | NULL    |       |
++---------------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table 
+
+mysql> create table issuerecord(id int primary key,copyid int,memberid int,issue_date varchar(50),return_duedate varchar(30),return_date varchar(30),fine_amount float,foreign key(copyid) references copies(id),foreign key(memberid) references users(id));
+Query OK, 0 rows affected (0.74 sec)
+
+mysql> desc issuerecord;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| id             | int(11)     | NO   | PRI | NULL    |       |
+| copyid         | int(11)     | YES  | MUL | NULL    |       |
+| memberid       | int(11)     | YES  | MUL | NULL    |       |
+| issue_date     | varchar(50) | YES  |     | NULL    |       |
+| return_duedate | varchar(30) | YES  |     | NULL    |       |
+| return_date    | varchar(30) | YES  |     | NULL    |       |
+| fine_amount    | float       | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
